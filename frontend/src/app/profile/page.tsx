@@ -30,20 +30,13 @@ export default function Profile() {
                 {user && user.createdAt && <p className="text-slate-400 text-sm">Member since: {new Date(user.createdAt).toLocaleDateString()}</p>}
               </div>
             </div>
-            
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-900/60 rounded-lg p-4 border border-slate-900/30 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
-                <h3 className="text-base font-semibold text-white mb-2">Account Settings</h3>
-                <p className="text-slate-300 text-sm">Manage your account preferences and security settings.</p>
-              </div>
-              <div className="bg-slate-900/60 rounded-lg p-4 border border-slate-900/30 hover:transform hover:-translate-y-1 hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
-                <h3 className="text-base font-semibold text-white mb-2">Preferences</h3>
-                <p className="text-slate-300 text-sm">Customize your Cloudmart experience and notifications.</p>
-              </div>
-            </div> */}
           </SignedIn>
           <SignedOut>
-            <SignInButton/>
+            <SignInButton mode="modal">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow cursor-pointer">
+                Sign In
+              </button>
+            </SignInButton>
           </SignedOut>
         </div>
       </div>

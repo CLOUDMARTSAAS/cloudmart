@@ -127,7 +127,11 @@ export default function Layout({ children }: LayoutProps) {
               </div>
               <div className="ml-3">
                 <SignedOut>
-                  <SignInButton/>
+                  <SignInButton mode="modal">
+                    <button className="cursor-pointer">
+                      Sign In
+                    </button>
+                  </SignInButton>
                 </SignedOut>
                 <SignedIn>
                   <p className="text-sm font-medium text-white">{user?.fullName}</p>
