@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, UserProfile, useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 
 // Icons as SVG components
 const HomeIcon = () => (
@@ -37,10 +37,10 @@ const AboutIcon = () => (
 );
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Applications', href: '/applications', icon: ApplicationsIcon },
-  { name: 'Subscriptions', href: '/subscriptions', icon: SubscriptionsIcon },
-  { name: 'Profile', href: '/profile', icon: ProfileIcon },
+  { name: 'Home', href: '/', icon: HomeIcon, requiresSignIn: false},
+  { name: 'Applications', href: '/applications', icon: ApplicationsIcon, requiresSignIn: false},
+  { name: 'Subscriptions', href: '/subscriptions', icon: SubscriptionsIcon, requiresSignIn: true},
+  { name: 'Profile', href: '/profile', icon: ProfileIcon, requiresSignIn: true},
   { name: 'About Us', href: '/about', icon: AboutIcon },
 ];
 
@@ -51,7 +51,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
 
   return (
     <div className="min-h-screen">
@@ -90,7 +90,7 @@ export default function Layout({ children }: LayoutProps) {
           {/* Navigation */}
           <nav className="flex-1 px-6 py-6">
             <ul className="space-y-2">
-              {navigation.map((item) => {
+              {navigation.filter(item => !item.requiresSignIn || isSignedIn ).map((item) => {
                 const splitPathName = pathname.split("/");
                 const pathNamePrefix = "/" + splitPathName[1];
                 const isActive = pathNamePrefix === item.href;
