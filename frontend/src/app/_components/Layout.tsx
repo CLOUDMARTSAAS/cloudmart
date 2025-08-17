@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, UserProfile, useUser } from '@clerk/nextjs';
 
 // Icons as SVG components
 const HomeIcon = () => (
@@ -50,6 +51,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen">
@@ -116,11 +118,21 @@ export default function Layout({ children }: LayoutProps) {
           <div className="px-6 py-6 border-t border-slate-700">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-slate-600 rounded-full flex items-center justify-center">
-                <ProfileIcon />
+                <SignedOut>
+                  <ProfileIcon />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium text-white">John Doe</p>
-                <p className="text-xs text-slate-400">john.doe@example.com</p>
+                <SignedOut>
+                  <SignInButton/>
+                </SignedOut>
+                <SignedIn>
+                  <p className="text-sm font-medium text-white">{user?.fullName}</p>
+                  <p className="text-xs text-slate-400">{user?.primaryEmailAddress?.emailAddress}</p>
+                </SignedIn>
               </div>
             </div>
           </div>
