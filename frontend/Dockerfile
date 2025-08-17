@@ -12,7 +12,8 @@ RUN npm run build
 
 # Production stage
 FROM node:23-alpine AS runner
-LABEL version="0.0.5-fe-SNAPSHOT"
+LABEL name="cloudmartfe"
+LABEL version="0.0.5-SNAPSHOT"
 WORKDIR /app
 
 # Install only runtime dependencies
