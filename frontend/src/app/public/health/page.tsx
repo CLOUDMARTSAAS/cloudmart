@@ -14,25 +14,10 @@ function HealthCheck() {
 
   // Simulate API health check
   useEffect(() => {
-    const checkHealth = () => {
-      // Simulate API call delay
-      setTimeout(() => {
-        // Simulate random health status
-        const isHealthy = Math.random() > 0.2;
-        if (isHealthy) {
-          setHealth({
-            status: "healthy",
-            timestamp: new Date().toISOString()
-          });
-          setError(null);
-        } else {
-          setError("Service unavailable");
-          setHealth(null);
-        }
-      }, 1000);
-    };
-
-    checkHealth();
+    fetch(apiUrl + "/health")
+      .then(response => response.json())
+      .then(data => setHealth(data))
+      .catch(err => setError(err.message));
   }, []);
 
   return (
