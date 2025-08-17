@@ -23,7 +23,7 @@ export default function Subscriptions() {
           </SignedIn>
           <SignedOut>
             <p className="text-slate-300">
-              Please "Sign In" to view subscriptions.
+              Please &quot;Sign In&quot; to view subscriptions.
             </p>
             <p className="mt-3">
               <SignInButton mode="modal">
