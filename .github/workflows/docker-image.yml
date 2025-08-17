@@ -14,7 +14,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: cloudmartsaas/cloudmart
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
       with:
         ref: ${{ inputs.branch }}
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ toLower(env.REGISTRY) }}/${{ env.IMAGE_NAME }}:${{ inputs.IMAGE_TAG }}
+      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.IMAGE_TAG }}
     - name: Log in to Container Registry
       uses: docker/login-action@v3
       with:
@@ -34,4 +34,4 @@ jobs:
         username: ${{ secrets.GA_CI_USERNAME }}
         password: ${{ secrets.GA_CI_TOKEN }}
     - name: Push Docker image
-      run: docker push ${{ toLower(env.REGISTRY) }}/${{ env.IMAGE_NAME }}:${{ inputs.IMAGE_TAG }}
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.IMAGE_TAG }}
