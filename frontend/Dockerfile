@@ -10,6 +10,7 @@ RUN npm install
 COPY . .
 RUN echo NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY > .env.local 
 RUN echo CLERK_SECRET_KEY=$CLERK_SECRET_KEY >> .env.local
+RUN cat .env.local
 RUN npm run build
 
 # Production stage
