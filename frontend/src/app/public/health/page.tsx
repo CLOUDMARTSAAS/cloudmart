@@ -1,6 +1,6 @@
 'use client';
 
-import { apiUrl } from "@/app/_utils/constants";
+import { apiUrl } from "@/app/_utils/environmentvariables";
 import React, { useEffect, useState } from "react";
 
 type HealthStatus = {
