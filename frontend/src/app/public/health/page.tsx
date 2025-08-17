@@ -11,7 +11,6 @@ type HealthStatus = {
 function HealthCheck() {
   const [health, setHealth] = useState<HealthStatus | null>(null);
   const [error, setError] = useState<string | null>(null);
-  console.log("apiUrl: " + apiUrl);
 
   // Simulate API health check
   useEffect(() => {
