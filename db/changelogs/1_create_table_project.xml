@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>	
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+
+    <changeSet  id="create_table_project" author="postgres">  
+        <createTable tableName="project">  
+            <column name="id" type="int" autoIncrement="true">  
+                <constraints primaryKey="true" nullable="false"/>  
+            </column>  
+            <column name="name" type="varchar(1000)"/>
+            <column name="short_description" type="varchar(300)">  
+                <constraints nullable="false"/>  
+            </column> 
+            <column name="long_description" type="varchar(2000)">  
+                <constraints nullable="false"/>  
+            </column>  
+            <column name="url" type="varchar(2000)">  
+                <constraints nullable="false"/>  
+            </column>
+            <column name="status" type="varchar(100)">  
+                <constraints nullable="false"/>  
+            </column>
+            <column name="created" type="timestamp">  
+                <constraints nullable="false"/>  
+            </column>
+            <column name="updated" type="timestamp">  
+                <constraints nullable="false"/>  
+            </column>
+        </createTable>  
+    </changeSet> 
+
+</databaseChangeLog>
