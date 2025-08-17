@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     db_url: str
     db_schema: str
     frontend_base_dir: str = "public"
+    allowed_origins: str
 
 
 env_profile = os.environ.get("ACTIVE_PROFILE")
