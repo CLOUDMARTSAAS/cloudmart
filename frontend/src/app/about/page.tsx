@@ -1,3 +1,6 @@
+
+'use client';
+
 import Layout from '@/app/_components/Layout';
 
 // Social media icons

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/nextjs';
 
 // Icons as SVG components
 const HomeIcon = () => (
@@ -36,10 +37,10 @@ const AboutIcon = () => (
 );
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Applications', href: '/applications', icon: ApplicationsIcon },
-  { name: 'Subscriptions', href: '/subscriptions', icon: SubscriptionsIcon },
-  { name: 'Profile', href: '/profile', icon: ProfileIcon },
+  { name: 'Home', href: '/', icon: HomeIcon, requiresSignIn: false},
+  { name: 'Applications', href: '/applications', icon: ApplicationsIcon, requiresSignIn: false},
+  { name: 'Subscriptions', href: '/subscriptions', icon: SubscriptionsIcon, requiresSignIn: true},
+  { name: 'Profile', href: '/profile', icon: ProfileIcon, requiresSignIn: true},
   { name: 'About Us', href: '/about', icon: AboutIcon },
 ];
 
@@ -50,6 +51,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, isSignedIn } = useUser();
 
   return (
     <div className="min-h-screen">
@@ -88,7 +90,7 @@ export default function Layout({ children }: LayoutProps) {
           {/* Navigation */}
           <nav className="flex-1 px-6 py-6">
             <ul className="space-y-2">
-              {navigation.map((item) => {
+              {navigation.filter(item => !item.requiresSignIn || isSignedIn ).map((item) => {
                 const splitPathName = pathname.split("/");
                 const pathNamePrefix = "/" + splitPathName[1];
                 const isActive = pathNamePrefix === item.href;
@@ -116,11 +118,25 @@ export default function Layout({ children }: LayoutProps) {
           <div className="px-6 py-6 border-t border-slate-700">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-slate-600 rounded-full flex items-center justify-center">
-                <ProfileIcon />
+                <SignedOut>
+                  <ProfileIcon />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium text-white">John Doe</p>
-                <p className="text-xs text-slate-400">john.doe@example.com</p>
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="cursor-pointer">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <p className="text-sm font-medium text-white">{user?.fullName}</p>
+                  <p className="text-xs text-slate-400">{user?.primaryEmailAddress?.emailAddress}</p>
+                </SignedIn>
               </div>
             </div>
           </div>
